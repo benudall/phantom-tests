@@ -39,3 +39,7 @@ console.log('Page title is ' + title);
 page.open("http://google.com", function(status) {
 	page.render('screenshot.png');
 });
+
+
+//Finish script
+phantom.exit();

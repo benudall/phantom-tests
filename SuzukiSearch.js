@@ -1,8 +1,7 @@
 var page = require('webpage').create();
-
+start=Date.now();
 searchmachines=[];
 fadmachines=[];
-page.onError=function(msg,trace){}
 function search(){
 	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki=ignis",function(status){
 		var machine = page.evaluate(function(){
@@ -18,7 +17,9 @@ function search(){
 			console.log(machine);
 		}
 		if(searchmachines.length==4){
+			console.log("");
 			console.log("Searching Find a Dealer for 'WC1X8HN'");
+			console.log("");
 			findadealer();
 		}
 		else{
@@ -37,7 +38,7 @@ function findadealer(){
 								return comments[x].data+"returns "+document.querySelector(".address__header").innerText;
 							}
 							else{
-								return "not found"+Date.now();
+								return "not found";
 							}
 						}
 					}
@@ -47,13 +48,46 @@ function findadealer(){
 					console.log(machine);
 				}
 				if(fadmachines.length==4){
-					phantom.exit();
+					end();
 				}
 				else{
 					findadealer();
 				}
-		},3000);
+		},2000);
 	});
 }
+function end(){
+	searchresults=[];
+	fadresults=[];
+	for(x=0;x<4;x++){
+		searchresults.push(searchmachines[x].split(" returns")[1]);
+		fadresults.push(fadmachines[x].split(" returns")[1]);
+	}
+	var uniquesearches = [];
+	for(i = 0;i < 4;i++){
+		if(uniquesearches.indexOf(searchresults[i])==-1){
+			uniquesearches.push(searchresults[i]);
+		}
+	}
+	var uniquedealers = [];
+	for(i = 0;i < 4;i++){
+		if(uniquedealers.indexOf(fadresults[i])==-1){
+			uniquedealers.push(fadresults[i]);
+		}
+	}
+	console.log("");
+	console.log("DONE");
+	if(uniquesearches.length!=1){
+		console.log("");
+		console.log("!----------MACHINES' SEARCH INDEXES ARE OUT OF SYNC----------!");
+	}
+	if(uniquedealers.length!=1){
+		console.log("");
+		console.log("!----------MACHINES' DEALER INDEXES ARE OUT OF SYNC----------!");
+	}
+	phantom.exit()
+}
+console.log("");
 console.log("Searching site for 'Ignis'");
+console.log("");
 search();
