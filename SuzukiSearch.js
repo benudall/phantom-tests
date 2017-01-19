@@ -2,6 +2,7 @@ var page = require('webpage').create();
 start=Date.now();
 searchmachines=[];
 fadmachines=[];
+page.onError = function(msg, trace) {}
 function search(){
 	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki=ignis",function(status){
 		var machine = page.evaluate(function(){
@@ -53,7 +54,7 @@ function findadealer(){
 				else{
 					findadealer();
 				}
-		},2000);
+		},3000);
 	});
 }
 function end(){
