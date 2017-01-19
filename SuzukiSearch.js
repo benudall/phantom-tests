@@ -1,10 +1,17 @@
 start=Date.now();
 var page = require('webpage').create();
+var system = require('system');
+
+if(system.args[1]){var q=system.args[1]}
+else{var q="Ignis"}
+if(system.args[2]){var postcode=system.args[2]}
+else{var postcode="TS4 2ET"}
+
 searchmachines=[];
 fadmachines=[];
 page.onError = function(msg, trace) {}
 function search(){
-	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki=ignis",function(status){
+	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki="+q,function(status){
 		var machine = page.evaluate(function(){
 			comments=document.head.childNodes;
 			for(x=0;x<comments.length;x++){
@@ -19,7 +26,7 @@ function search(){
 		}
 		if(searchmachines.length==4){
 			console.log("");
-			console.log("Searching Find a Dealer for 'WC1X8HN'");
+			console.log("Searching Find a Dealer for "+postcode);
 			console.log("");
 			findadealer();
 		}
@@ -29,7 +36,7 @@ function search(){
 	});
 }
 function findadealer(){
-	page.open("https://cars.suzuki.co.uk/find-a-dealer?PostcodeForDealers=WC1X8HN",function(status){
+	page.open("https://cars.suzuki.co.uk/find-a-dealer?PostcodeForDealers="+postcode,function(status){
 		setTimeout(function(){
 			var machine = page.evaluate(function(){
 					comments=document.head.childNodes;
@@ -89,6 +96,6 @@ function end(){
 	phantom.exit()
 }
 console.log("");
-console.log("Searching site for 'Ignis'");
+console.log("Searching site for "+q);
 console.log("");
 search();

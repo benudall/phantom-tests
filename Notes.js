@@ -1,6 +1,6 @@
 //Init
-var	page = require('webpage').create(),
-	system = require('system'),
+var	page = require('webpage').create();
+var system = require('system');
 
 //Get URL from system arguments
 url = system.args[1];
