@@ -1,5 +1,5 @@
-var page = require('webpage').create();
 start=Date.now();
+var page = require('webpage').create();
 searchmachines=[];
 fadmachines=[];
 page.onError = function(msg, trace) {}
@@ -77,7 +77,7 @@ function end(){
 		}
 	}
 	console.log("");
-	console.log("DONE");
+	console.log("Finished in "+Math.round((Date.now()-start)/1000)+" seconds");
 	if(uniquesearches.length!=1){
 		console.log("");
 		console.log("!----------MACHINES' SEARCH INDEXES ARE OUT OF SYNC----------!");
