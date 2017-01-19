@@ -38,7 +38,7 @@ function findadealer(){
 								return comments[x].data+"returns "+document.querySelector(".address__header").innerText;
 							}
 							else{
-								return "not found";
+								return comments[x].data+"returned nothing";
 							}
 						}
 					}
