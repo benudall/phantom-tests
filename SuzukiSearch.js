@@ -1,5 +1,5 @@
-var page = require('webpage').create();
-var system = require('system');
+var page=require('webpage').create();
+var system=require('system');
 
 if(system.args[1]){var q=system.args[1]}
 else{var q="Ignis"}
