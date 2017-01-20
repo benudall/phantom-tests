@@ -1,4 +1,3 @@
-start=Date.now();
 var page = require('webpage').create();
 var system = require('system');
 
@@ -7,10 +6,27 @@ else{var q="Ignis"}
 if(system.args[2]){var postcode=system.args[2]}
 else{var postcode="TS4 2ET"}
 
-searchmachines=[];
-fadmachines=[];
+function timecheck(){
+	if((new Date().getMinutes())%5==0 && new Date().getMinutes() != new Date(start).getMinutes()){
+		search(true);
+    }
+	else{
+		console.log(new Date().getMinutes());
+		setTimeout(function(){timecheck()},30000)
+    }
+}
 page.onError = function(msg, trace) {}
-function search(){
+function search(first){
+	if(first){
+		start=Date.now()
+		searchmachines=[];
+		fadmachines=[];
+		console.log("");
+		console.log(Date());
+		console.log("");
+		console.log("Searching site for "+q);
+		console.log("");
+	}
 	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki="+q,function(status){
 		var machine = page.evaluate(function(){
 			comments=document.head.childNodes;
@@ -25,17 +41,19 @@ function search(){
 			console.log(machine);
 		}
 		if(searchmachines.length==4){
-			console.log("");
-			console.log("Searching Find a Dealer for "+postcode);
-			console.log("");
-			findadealer();
+			findadealer(true);
 		}
 		else{
-			search();
+			search(false);
 		}
 	});
 }
-function findadealer(){
+function findadealer(first){
+	if(first){
+		console.log("");
+		console.log("Searching Find a Dealer for "+postcode);
+		console.log("");
+	}
 	page.open("https://cars.suzuki.co.uk/find-a-dealer?PostcodeForDealers="+postcode,function(status){
 		setTimeout(function(){
 			var machine = page.evaluate(function(){
@@ -59,7 +77,7 @@ function findadealer(){
 					end();
 				}
 				else{
-					findadealer();
+					findadealer(false);
 				}
 		},3000);
 	});
@@ -93,9 +111,6 @@ function end(){
 		console.log("");
 		console.log("!----------MACHINES' DEALER INDEXES ARE OUT OF SYNC----------!");
 	}
-	phantom.exit()
+	timecheck();
 }
-console.log("");
-console.log("Searching site for "+q);
-console.log("");
-search();
+search(true);
