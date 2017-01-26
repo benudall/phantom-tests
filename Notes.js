@@ -1,5 +1,5 @@
 //Init
-var	page = require('webpage').create();
+var page = require('webpage').create();
 var system = require('system');
 
 //Get URL from system arguments
