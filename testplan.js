@@ -1,33 +1,33 @@
-myobj={tests:{},results:{}};
+tests={};
+results=0;
 function instance(testname,starturl,func){
-	myobj.tests[testname]={};
-	myobj.tests[testname].page=require('webpage').create();
-	myobj.tests[testname].page.open(starturl,func);
-	myobj.tests[testname].page.end=function(result){
-		this.close();
-		myobj.results[testname]={};
-		myobj.results[testname].result=result;
-		if(Object.keys(myobj.results).length==Object.keys(myobj.tests).length){
+	tests[testname]={};
+	tests[testname].page=require('webpage').create();
+	tests[testname].page.end=function(result){
+		tests[testname].result=result;
+		results++;
+		if(Object.keys(tests).length==results){
 			console.log("All tests done");
+			for(x in tests){
+				console.log(x+" "+tests[x].result);
+			}
+			phantom.exit();
 		}
-		
 	}
+	tests[testname].page.open(starturl,func);
 }
 
 instance("Test1","https://google.com",function(){
 	this.render('google.png');
-	console.log("google.png");
 	this.end("Pass");
 });
 
 instance("Test2","https://wikipedia.org",function(){
 	this.render('wiki.png');
-	console.log("wiki.png");
 	this.end("Pass");
 });
 
 instance("Test3","https://yahoo.com",function(){
 	this.render('yahoo.png');
-	console.log("yahoo.png");
 	this.end("Pass");
 });
