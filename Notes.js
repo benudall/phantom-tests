@@ -17,6 +17,11 @@ page.open("http://google.com", function(status) {
 	});
 });
 
+//Perform preset actions to be shared across tests
+script1="function(){ /*do stuff here*/ }";
+page.open("http://google.com", function(status) {
+	page.evaluateJavaScript(script1);
+});
 
 //To return value from page:
 page.onConsoleMessage = function(msg) {
