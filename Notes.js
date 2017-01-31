@@ -23,6 +23,13 @@ page.open("http://google.com", function(status) {
 	page.evaluateJavaScript(script1);
 });
 
+//or
+
+function script1(){ /*do stuff here*/ };
+page.open("http://google.com", function(status) {
+	page.evaluateJavaScript(script1.toString());
+});
+
 //To return value from page:
 page.onConsoleMessage = function(msg) {
 	console.log('Page title is ' + msg);
