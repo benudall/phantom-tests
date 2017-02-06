@@ -15,8 +15,10 @@ function instance(testname,starturl,func){
 	}
 	tests[testname].page.open(starturl,func);
 }
-//Shared functions to reuse amongst tests
-getmachine="function(){return Array.prototype.slice.call(document.head.childNodes).filter(function(x){return (x.nodeName=='#comment' && x.data.match('Machine'))})[0].data}";
+//Shared functions to reuse amongst tests with this.evaluateJavaScript(funcname.toString());
+function getmachine(){
+	return Array.prototype.slice.call(document.head.childNodes).filter(function(x){return (x.nodeName=='#comment' && x.data.match('Machine'))})[0].data
+};
 
 //Tests
 instance("Test1","https://google.com",function(){
