@@ -1,4 +1,4 @@
-//Init
+//Create page (can create multiple with different names)
 var page = require('webpage').create();
 var system = require('system');
 
@@ -9,6 +9,8 @@ url = system.args[1];
 page.open(url, function(status) {
 	//do stuff here
 });
+//Change window size (can be done on opened page)
+page.viewportSize={width:1680,height:720};
 
 //Perform actions
 page.open("http://google.com", function(status) {

@@ -1,11 +1,8 @@
 page=require('webpage').create();
 
-function script1(){
-	document.body.style.background='red'
-};
-
 page.open("http://google.com",function(){
-	page.evaluateJavaScript(script1.toString());
-	page.render("google.png");
+	page.render("defaultsize.png");
+	page.viewportSize={width:1680,height:720};
+	page.render("1680x720.png");
 	phantom.exit();
 })

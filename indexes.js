@@ -18,14 +18,13 @@ function timecheck(){
 page.onError = function(msg, trace) {}
 function search(first){
 	if(first){
-		start=Date.now()
-		searchmachines=[];
-		fadmachines=[];
+		start=Date.now();
 		console.log("");
 		console.log(Date());
 		console.log("");
 		console.log("Searching site for "+q);
 		console.log("");
+		searchmachines=[];
 	}
 	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki="+q,function(status){
 		var machine = page.evaluate(function(){
@@ -53,41 +52,45 @@ function findadealer(first){
 		console.log("");
 		console.log("Searching Find a Dealer for "+postcode);
 		console.log("");
+		fadmachines=[];
+		fadresults=[];
 	}
 	page.open("https://cars.suzuki.co.uk/find-a-dealer?PostcodeForDealers="+postcode,function(status){
-		setTimeout(function(){
-			var machine = page.evaluate(function(){
-					comments=document.head.childNodes;
-					for(x=0;x<comments.length;x++){
-						if(comments[x].nodeType==Node.COMMENT_NODE && comments[x].data.indexOf("Machine")>-1){
-							if(document.querySelector(".address__header")){
-								return comments[x].data+"returns "+document.querySelector(".address__header").innerText;
-							}
-							else{
-								return comments[x].data+"returned nothing";
-							}
-						}
+		var machine = page.evaluate(function(){
+			return Array.prototype.slice.call(document.head.childNodes).filter(function(x){return (x.nodeName=='#comment' && x.data.match('Machine'))})[0].data;
+		});
+		if(fadmachines.indexOf(machine)==-1){
+			fadmachines.push(machine);
+			setTimeout(function(){
+				var result = page.evaluate(function(){
+					if(document.querySelector(".address__header")){
+						return document.querySelector(".address__header").innerText;
+					}
+					else{
+						return "nothing";
 					}
 				});
-				if(fadmachines.indexOf(machine)==-1){
-					fadmachines.push(machine);
-					console.log(machine);
-				}
+				fadresults.push(machine+"returns "+result);
+				console.log(machine+"returns "+result);
 				if(fadmachines.length==4){
 					end();
 				}
 				else{
 					findadealer(false);
 				}
-		},10000);
+			},10000);
+		}
+		else{
+			findadealer(false);
+		}
 	});
 }
 function end(){
 	searchresults=[];
-	fadresults=[];
+	fadresults2=[];
 	for(x=0;x<4;x++){
 		searchresults.push(searchmachines[x].split(" returns")[1]);
-		fadresults.push(fadmachines[x].split(" returns")[1]);
+		fadresults2.push(fadmachines[x].split(" returns")[1]);
 	}
 	var uniquesearches = [];
 	for(i = 0;i < 4;i++){
@@ -97,8 +100,8 @@ function end(){
 	}
 	var uniquedealers = [];
 	for(i = 0;i < 4;i++){
-		if(uniquedealers.indexOf(fadresults[i])==-1){
-			uniquedealers.push(fadresults[i]);
+		if(uniquedealers.indexOf(fadresults2[i])==-1){
+			uniquedealers.push(fadresults2[i]);
 		}
 	}
 	console.log("");
