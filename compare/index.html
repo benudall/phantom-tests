@@ -1,0 +1,9 @@
+<img class=img1 src=1.jpg><img class=img2 src=2.jpg>
+<script>
+img1=document.querySelector(".img1");
+img2=document.querySelector(".img2");
+canvas=document.createElement("canvas");
+canvas.height=img1.height;
+canvas.width=img1.width;
+canvas.getContext("2d").drawImage(document.querySelector("img"),0,0);
+</script>
