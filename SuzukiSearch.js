@@ -11,7 +11,7 @@ function timecheck(){
 		search(true);
     }
 	else{
-		console.log(new Date().getMinutes());
+		console.log(new Date().getHours()+":"+new Date().getMinutes());
 		setTimeout(function(){timecheck()},30000)
     }
 }
