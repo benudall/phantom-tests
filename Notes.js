@@ -51,9 +51,15 @@ console.log('Page title is ' + title);
 
 //Take screenshot
 page.open("http://google.com", function(status) {
-	page.render('screenshot.png');
+	page.render("screenshot.png");
 });
-
+//Change screenshot target
+page.clipRect = {
+	top:    0,
+	left:   0,
+	width:  200,
+	height: 200
+};
 
 //Finish script
 phantom.exit();
