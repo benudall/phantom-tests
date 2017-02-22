@@ -12,17 +12,36 @@
 			document.head.appendChild(input);
 		},1000);
 	</script>
+	<style>
+		body{
+			font-size: 30px;
+		}
+		.searchresult{
+			font-family: monospace;
+		}
+	</style>
 </head>
 <body ng-app="app">
 	<div ng-controller="controller">
 		<div>
-			{{res}}
+			Last ran: {{res.start}}
+			<br>
+			Runs every 5 minutes
+			</br>
+			{{since}} seconds since last test
+		</div>
+		<br>
+		<div ng-repeat="machine in res.search.machines" class=searchresult>
+			{{machine.machine}} returns {{machine.result}}
 		</div>
 	</div>
 </body>
 <script>
 app = angular.module("app", []);
-app.controller("controller", function($scope){
-	$scope.res=res;
+app.controller("controller", function($scope,$interval){
+	$interval(function(){
+		$scope.res = res;
+		$scope.since = Math.floor((Date.now() - new Date(res.start).valueOf())/1000);
+	},1000);
 });
 </script>

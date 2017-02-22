@@ -32,7 +32,7 @@ function search(first){
 		var result = page.evaluate(function(){
 			return document.querySelector(".search-counter").innerText.split(" for")[0];
 		});
-		if(res.search.machines.indexOf(machine) == -1){
+		if(res.search.machines.toString().indexOf(machine) == -1){
 			res.search.machines.push({machine:machine,result:result});
 			console.log(machine + " returns " + result);
 		}
