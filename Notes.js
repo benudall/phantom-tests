@@ -53,6 +53,7 @@ console.log('Page title is ' + title);
 page.open("http://google.com", function(status) {
 	page.render("screenshot.png");
 });
+
 //Change screenshot target
 page.clipRect = {
 	top:    0,

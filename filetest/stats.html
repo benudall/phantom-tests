@@ -1,9 +1,28 @@
-<div id=output></div>
-<script id=input src="pass.js"></script>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script id="input" src="res.js"></script>
+	<script>
+		setInterval(function(){
+			if(document.querySelector("#input")){
+				document.head.removeChild(document.querySelector("#input"));
+			}
+			input=document.createElement("script");
+			input.id="input";
+			input.src="res.js";
+			document.head.appendChild(input);
+		},1000);
+	</script>
+</head>
+<body ng-app="app">
+	<div ng-controller="controller">
+		<div>
+			{{res}}
+		</div>
+	</div>
+</body>
 <script>
-	setInterval(function(){
-		document.querySelector("#input").src="";
-		document.querySelector("#input").src="pass.js";
-		document.querySelector("#output").innerHTML=json.test1;
-	},1000);
+app = angular.module("app", []);
+app.controller("controller", function($scope){
+	$scope.res=res;
+});
 </script>
