@@ -16,19 +16,29 @@
 		body{
 			font-size: 30px;
 		}
+		.controller{
+			height: 100%;
+			width: 100%;
+		}
 		.searchresult{
 			font-family: monospace;
+		}
+		.error{
+			color: red;
+		}
+		.true{
+			background:red;
 		}
 	</style>
 </head>
 <body ng-app="app">
-	<div ng-controller="controller">
+	<div ng-controller="controller" class="controller {{error}}">
 		<div>
 			Last ran: {{res.start}}
 			<br>
 			Runs every 5 minutes
 			</br>
-			{{since}} seconds since last test
+			{{since}} seconds since last test <span class=error ng-if="since>600">Build may be broken, check script</span>
 		</div>
 		<br>
 		<div ng-repeat="machine in res.search.machines" class=searchresult>
@@ -43,5 +53,6 @@ app.controller("controller", function($scope,$interval){
 		$scope.res = res;
 		$scope.since = Math.floor((Date.now() - new Date(res.start).valueOf())/1000);
 	},1000);
+	$scope.error=false;
 });
 </script>
