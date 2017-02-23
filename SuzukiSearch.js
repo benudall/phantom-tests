@@ -27,7 +27,7 @@ function search(first){
 		console.log("Searching site for "+q);
 		console.log("");
 	}
-	page.open("http://prod-suzuki-staging.azurewebsites.net/search/?searchSuzuki="+q,function(status){
+	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki="+q,function(status){
 		var machine = page.evaluate(function(){
 			comments=document.head.childNodes;
 			for(x=0;x<comments.length;x++){
@@ -54,7 +54,7 @@ function findadealer(first){
 		console.log("Searching Find a Dealer for "+postcode);
 		console.log("");
 	}
-	page.open("http://prod-suzuki-staging.azurewebsites.net/find-a-dealer?PostcodeForDealers="+postcode,function(status){
+	page.open("https://cars.suzuki.co.uk/find-a-dealer?PostcodeForDealers="+postcode,function(status){
 		setTimeout(function(){
 			var machine = page.evaluate(function(){
 					comments=document.head.childNodes;
