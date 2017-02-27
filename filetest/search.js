@@ -2,6 +2,9 @@ var page = require('webpage').create();
 var system = require('system');
 var fs = require('fs');
 
+//url = "https://prod-suzuki-staging.azurewebsites.net/"
+url = "https://cars.suzuki.co.uk"
+
 if(system.args[1]){var q = system.args[1]}
 else{var q="Ignis"}
 
@@ -18,21 +21,21 @@ page.onError = function(msg, trace){}
 function search(first){
 	if(first){
 		start=Date.now()
-		res={start:Date(),search:{machines:[]}};
+		res={start:Date(),url:url,search:{machines:[]}};
 		console.log("");
 		console.log(Date());
 		console.log("");
-		console.log("Searching site for " + q);
+		console.log("Searching "+url+" for " + q);
 		console.log("");
 	}
-	page.open("https://cars.suzuki.co.uk/search/?searchSuzuki="+q , function(status){
+	page.open(url+"/search/?searchSuzuki="+q , function(status){
 		var machine = page.evaluate(function(){
 			return Array.prototype.slice.call(document.head.childNodes).filter(function(x){return (x.nodeName=='#comment' && x.data.match('Machine'))})[0].data;
 		});
 		var result = page.evaluate(function(){
 			return document.querySelector(".search-counter").innerText.split(" for")[0];
 		});
-		if(res.search.machines.toString().indexOf(machine) == -1){
+		if(JSON.stringify(res.search.machines).indexOf(machine) == -1){
 			res.search.machines.push({machine:machine,result:result});
 			console.log(machine + " returns " + result);
 		}
@@ -45,6 +48,10 @@ function search(first){
 	});
 }
 function end(){
+	for(x=0;x<res.search.machines.length;x++){
+		var regex=new RegExp(res.search.machines[x].result,"g")
+		res.search.machines[x].uniqueness="u"+JSON.stringify(res.search.machines).match(regex).length
+	}	
 	fs.write("res.js","res="+JSON.stringify(res));
 
 	var uniquesearches = [];

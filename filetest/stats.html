@@ -29,6 +29,10 @@
 		.true{
 			background:red;
 		}
+		span.u1{background: red;}
+		span.u2{background: orange;}
+		span.u3{background: yellow;}
+		span.u4{background: green;}
 	</style>
 </head>
 <body ng-app="app">
@@ -36,13 +40,13 @@
 		<div>
 			Last ran: {{res.start}}
 			<br>
-			Runs every 5 minutes
+			Running every 5 minutes on {{res.url}}
 			</br>
 			{{since}} seconds since last test <span class=error ng-if="since>600">Build may be broken, check script</span>
 		</div>
 		<br>
 		<div ng-repeat="machine in res.search.machines" class=searchresult>
-			{{machine.machine}} returns {{machine.result}}
+			<span class="{{machine.uniqueness}}">{{machine.machine}} returns {{machine.result}}</span>
 		</div>
 	</div>
 </body>
@@ -50,7 +54,9 @@
 app = angular.module("app", []);
 app.controller("controller", function($scope,$interval){
 	$interval(function(){
-		$scope.res = res;
+		if($scope.res != res){
+			$scope.res = res;
+		}
 		$scope.since = Math.floor((Date.now() - new Date(res.start).valueOf())/1000);
 	},1000);
 	$scope.error=false;
