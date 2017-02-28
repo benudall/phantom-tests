@@ -1,12 +1,21 @@
 var page = require('webpage').create();
 var system = require('system');
 var fs = require('fs');
+//url = "https://uat-cms.suzuki.co.uk";
+//url = "https://prod-suzuki-staging.azurewebsites.net";
+//url = "https://cars.suzuki.co.uk";
 
-//url = "https://prod-suzuki-staging.azurewebsites.net/"
-url = "https://cars.suzuki.co.uk"
+if(system.args[1]){
+	if(system.args[1]=="live"){url = "https://cars.suzuki.co.uk";maxmachines=4}
+	else if(system.args[1]=="staging"){url = "https://prod-suzuki-staging.azurewebsites.net";maxmachines=4}
+	else if(system.args[1]=="uat"){url = "https://uat-cars.suzuki.co.uk";maxmachines=2}
+}
+else{
+	url = "https://cars.suzuki.co.uk";
+	maxmachines=4;
+}
 
-if(system.args[1]){var q = system.args[1]}
-else{var q="Ignis"}
+q="Ignis";
 
 function timecheck(){
 	if((new Date().getMinutes())%5 == 0 && new Date().getMinutes() != new Date(start).getMinutes()){
@@ -39,7 +48,7 @@ function search(first){
 			res.search.machines.push({machine:machine,result:result});
 			console.log(machine + " returns " + result);
 		}
-		if(res.search.machines.length == 4){
+		if(res.search.machines.length == maxmachines){
 			end();
 		}
 		else{
@@ -55,7 +64,7 @@ function end(){
 	fs.write("res.js","res="+JSON.stringify(res));
 
 	var uniquesearches = [];
-	for(i = 0;i < 4;i++){
+	for(i = 0;i < maxmachines;i++){
 		if(uniquesearches.indexOf(res.search.machines[i].result)==-1){
 			uniquesearches.push(res.search.machines[i].result);
 		}
