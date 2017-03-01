@@ -62,5 +62,18 @@ page.clipRect = {
 	height: 200
 };
 
+//Script to screenshot a specific element
+function renderelement(pageref,element,filename){
+	var oldclip = pageref.clipRect
+	pageref.clipRect = pageref.evaluate(function(element){
+		return document.querySelector(element).getBoundingClientRect();
+	},element);
+	pageref.render(filename);
+	pageref.clipRect = oldclip;
+};
+page.open("http://google.com", function(status){
+	renderelement(this,"img","snapshot.png");
+});
+
 //Finish script
 phantom.exit();
