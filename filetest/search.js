@@ -22,7 +22,7 @@ function timecheck(){
 		search(true);
     }
 	else{
-		console.log(new Date().getHours() + ":" + new Date().getMinutes());
+		console.log(new Date());
 		setTimeout(function(){timecheck()},30000)
     }
 }
@@ -41,15 +41,20 @@ function search(first){
 		var machine = page.evaluate(function(){
 			return Array.prototype.slice.call(document.head.childNodes).filter(function(x){return (x.nodeName=='#comment' && x.data.match('Machine'))})[0].data;
 		});
-		var result = page.evaluate(function(){
-			return document.querySelector(".search-counter").innerText.split(" for")[0];
-		});
-		if(JSON.stringify(res.search.machines).indexOf(machine) == -1){
-			res.search.machines.push({machine:machine,result:result});
-			console.log(machine + " returns " + result);
-		}
-		if(res.search.machines.length == maxmachines){
-			end();
+		if(machine!=null){
+			var result = page.evaluate(function(){
+				return document.querySelector(".search-counter").innerText.split(" for")[0];
+			});
+			if(JSON.stringify(res.search.machines).indexOf(machine) == -1){
+				res.search.machines.push({machine:machine,result:result});
+				console.log(machine + " returns " + result);
+			}
+			if(res.search.machines.length == maxmachines){
+				end();
+			}
+			else{
+				search(false);
+			}
 		}
 		else{
 			search(false);
@@ -71,6 +76,7 @@ function end(){
 	}
 	console.log("");
 	console.log("Finished in "+Math.round((Date.now()-start)/1000)+" seconds");
+	console.log("");
 	if(uniquesearches.length!=1){
 		console.log("");
 		console.log("!----------MACHINES' SEARCH INDEXES ARE OUT OF SYNC----------!");
