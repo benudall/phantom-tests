@@ -1,0 +1,189 @@
+
+{
+	"type" : "script",
+	"seleniumVersion" : "2",
+	"formatVersion" : 2,
+	"steps" : [
+		{
+			"type" : "get",
+			"url" : "http://carstestdev-suzuki.aquepreview.com/"
+		},
+		{
+			"type" : "get",
+			"url" : "/new-cars/hotspotcarousel/"
+		},
+		{
+			"type" : "verifyEval",
+			"script" : "document.querySelector(\".site-wrapper\").removeChild(document.querySelector(\".sticky-nav\"))",
+			"value" : ""
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .heading-set .heading-set__top:contains(\"Here's how it \")"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .heading-set .heading-set__top:contains(\"Here's how it \")"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .heading-set .heading-set__main:contains(\"Looks\")"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .heading-set .heading-set__main:contains(\"Looks\")"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .lead"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .lead"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .rich-text-editor"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__content .rich-text-editor"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-slider__item:nth-child(1) .picture__caption > p:contains(\"caption one\")"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-slider__item:nth-child(1) .picture__caption > p:contains(\"caption one\")"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .slick-next"
+			}
+		},
+		{
+			"type" : "clickElement",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .slick-next"
+			}
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-slider__item:nth-child(2)"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-slider__item:nth-child(2)"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .slick-dots li:nth-child(3) button"
+			}
+		},
+		{
+			"type" : "clickElement",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .slick-dots li:nth-child(3) button"
+			}
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-slider__item:nth-child(3)"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-slider__item:nth-child(3)"
+			},
+			"negated" : false
+		},
+		{
+			"type" : "waitForElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__footer .column--large-4:nth-child(3)"
+			}
+		},
+		{
+			"type" : "assertElementPresent",
+			"locator" :
+			{
+				"type" : "css selector",
+				"value" : ".content-module .content-module__footer .column--large-4:nth-child(3)"
+			},
+			"negated" : false
+		}
+	]
+}

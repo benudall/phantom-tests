@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head profile="http://selenium-ide.openqa.org/profiles/test-case">
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <link rel="selenium.base" href="http://carstestdev-suzuki.aquepreview.com" />
+ <title>Hotspot Carousel</title>
+ <meta name="ghost-inspector-details" content="" />
+ <meta name="ghost-inspector-httpAuthUsername" content="" />
+ <meta name="ghost-inspector-httpAuthPassword" content="" />
+ <meta name="ghost-inspector-browser" content="slimerjs" />
+ <meta name="ghost-inspector-userAgent" content="" />
+ <meta name="ghost-inspector-region" content="eu-west-1" />
+ <meta name="ghost-inspector-globalStepDelay" content="250" />
+ <meta name="ghost-inspector-maxWaitDelay" content="15000" />
+ <meta name="ghost-inspector-maxAjaxDelay" content="10000" />
+ <meta name="ghost-inspector-viewportSize" content="1024x768" />
+ <meta name="ghost-inspector-screenshotTarget" content="article.content-module" />
+ <meta name="ghost-inspector-screenshotExclusions" content="" />
+ <meta name="ghost-inspector-screenshotCompareEnabled" content="true" />
+ <meta name="ghost-inspector-screenshotCompareThreshold" content="0.02" />
+ </head>
+ <body>
+ <table cellpadding="1" cellspacing="1" border="1">
+ <thead>
+ <tr>
+ <td rowspan="1" colspan="3">Hotspot Carousel</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>open</td>
+ <td>/</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--Given I am on a page with a Content Block with Gallery-->
+<tr>
+ <td>open</td>
+ <td>/new-cars/hotspotcarousel/</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--Removing the sticky banner for screenshot-->
+<tr>
+ <td>runScript</td>
+ <td>document.querySelector(".site-wrapper").removeChild(document.querySelector(".sticky-nav"))</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see a top title-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-module__content .heading-set .heading-set__top:contains("Here's how it ")</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-module__content .heading-set .heading-set__top:contains("Here's how it ")</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see a title-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-module__content .heading-set .heading-set__main:contains("Looks")</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-module__content .heading-set .heading-set__main:contains("Looks")</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see a leading paragraph of text-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-module__content .lead</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-module__content .lead</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see a content paragraph of text-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-module__content .rich-text-editor</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-module__content .rich-text-editor</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see the image caption-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-slider__item:nth-child(1) .picture__caption > p:contains("caption one")</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-slider__item:nth-child(1) .picture__caption > p:contains("caption one")</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--Given I click on an arrow-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .slick-next</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>click</td>
+ <td>css=.content-module .slick-next</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see the next slide displayed-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-slider__item:nth-child(2)</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-slider__item:nth-child(2)</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--Given I click on the slide indicator-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .slick-dots li:nth-child(3) button</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>click</td>
+ <td>css=.content-module .slick-dots li:nth-child(3) button</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see the corresponding slide displayed-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-slider__item:nth-child(3)</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-slider__item:nth-child(3)</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>waitForPageToLoad</td>
+ <td></td>
+ <td></td>
+ </tr>
+<!--I can see extra images below the gallery-->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>css=.content-module .content-module__footer .column--large-4:nth-child(3)</td>
+ <td></td>
+ </tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>css=.content-module .content-module__footer .column--large-4:nth-child(3)</td>
+ <td></td>
+ </tr>
+</tbody>
+ </table>
+ </body>
+ </html>
