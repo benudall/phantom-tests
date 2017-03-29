@@ -51,14 +51,10 @@ function step(page,json,n){
 			break;
 		case "assertElementPresent":
 			if(json.steps[n].locator.value.indexOf(":contains(")>-1){
-				
-				console.log(page.evaluate(function(selector){return document.querySelector(selector.split(":contains(")[0]).innerText},json.steps[n].locator.value))
-				console.log(json.steps[n].locator.value.match(/:contains\("(.*)"\)/)[1])
-				
 				var isElementPresent = page.evaluate(function(selector){
 					reg=new RegExp(selector.match(/:contains\("(.*)"\)/)[1],"i");
-					return document.querySelector(selector.split(":contains(")[0]).innerHTML==selector.match(reg)[1];
-				},json.steps[n].locator.value)
+					return document.querySelector(selector.split(":contains(")[0]).innerHTML.match(reg)[0];
+				},json.steps[n].locator.value);
 				if(!isElementPresent){
 					console.log("fail");
 					page.result = page.result*0;
@@ -84,6 +80,7 @@ function step(page,json,n){
 		},timing);
 	}
 	else{
+		console.log(page.result);
 		page.render(page.testname+".png");
 	}
 }
