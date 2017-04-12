@@ -1,11 +1,12 @@
 fs = require('fs');
 tests={}; //Defining wrapper for test data
-function instance(testname,starturl,func){ //Container function for creating a test
+function test(testname,starturl,func){ //Container function for creating a test
 	tests[testname]={}; //Creates test
 	tests[testname].starturl=starturl; //Records starting url
 	tests[testname].page=require('webpage').create(); //Creates page for test
 	tests[testname].page.viewportSize={width:1680,height:720}; //Sets page size
 	tests[testname].page.testname=testname; //Sets testname within page for easier access later
+	//Custom page functions
 	tests[testname].page.renderelement=function(element,filename){ //Function to screenshot an element
 		var oldclip = this.clipRect //Saves original screenshot boundries
 		this.clipRect = this.evaluate(function(element){ //Gets boundries of element
@@ -14,6 +15,7 @@ function instance(testname,starturl,func){ //Container function for creating a t
 		this.render(filename); //Screenshots element
 		this.clipRect = oldclip; //Reverts screenshot boundries to original
 	};
+	//Function to end test
 	tests[testname].page.end=function(result){
 		this.close(); //Closes the page to save memory
 		delete tests[testname].page; //Removes page data from JSON to save space
@@ -33,22 +35,12 @@ function instance(testname,starturl,func){ //Container function for creating a t
 function getmachine(){
 	return Array.prototype.slice.call(document.head.childNodes).filter(function(x){return (x.nodeName=='#comment' && x.data.match('Machine'))})[0].data
 };
-
-//Tests
-instance("Test1","https://google.com",function(){
-	this.renderelement("#hplogo","google logo.png");
-	this.render("google.png");
-	this.end("Pass");
-});
-
-instance("Test2","https://wikipedia.org",function(){
-	this.renderelement(".central-featured-logo","wiki logo.png");
-	this.render("wiki.png");
-	this.end("Pass");
-});
-
-instance("Test3","https://uk.yahoo.com",function(){
-	this.renderelement("#uh-logo","yahoo logo.png");
-	this.render("yahoo.png");
-	this.end("Pass");
-});
+//Script to screenshot a specific element
+function renderelement(pageref,element,filename){
+	var oldclip = pageref.clipRect
+	pageref.clipRect = pageref.evaluate(function(element){
+		return document.querySelector(element).getBoundingClientRect();
+	},element);
+	pageref.render(filename);
+	pageref.clipRect = oldclip;
+};
