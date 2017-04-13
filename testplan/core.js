@@ -15,6 +15,34 @@ function test(testname,starturl,func){ //Container function for creating a test
 		this.render(filename); //Screenshots element
 		this.clipRect = oldclip; //Reverts screenshot boundries to original
 	};
+	tests[testname].page.click=function(element){
+		////Write failure case here
+		this.evaluate(function(element){
+			document.querySelector(element).click();
+		},element)
+	}
+	//Test steps builder
+	tests[testname].page.steps=[];
+	tests[testname].page.step=function(action,target,filename){
+		this.steps.push([action,target,filename]);
+	}
+	//Function to execute steps
+	tests[testname].page.execute=function(progress){
+		if(!progress){progress=0}
+		console.log("progress "+progress);
+		if(this.steps.length>progress){
+			console.log("running step "+progress+" of "+this.steps.length)
+			console.log(this.steps[progress][0]+" ON "+this.steps[progress][1])
+			this[this.steps[progress][0]](this.steps[progress][1],this.steps[progress][2]);
+			console.log("ran step")
+			progress++;
+			var testid=this.testname;
+			setTimeout(function(){tests[testid].page.execute(progress)},3000);
+		}
+		else{
+			this.end("Pass");
+		}
+	}
 	//Function to end test
 	tests[testname].page.end=function(result){
 		this.close(); //Closes the page to save memory
@@ -29,7 +57,9 @@ function test(testname,starturl,func){ //Container function for creating a test
 			phantom.exit();
 		}
 	}
-	tests[testname].page.open(starturl,func);
+	var newfunc = new Function(func.toString().replace(/^function\s*\(\)\s*\{/,"").replace(/(\}$)/g,"this.execute();"));
+	tests[testname].page.open(starturl,newfunc);
+	
 }
 //Shared functions to reuse amongst tests with this.evaluateJavaScript(funcname.toString());
 function getmachine(){
